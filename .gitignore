@@ -16,7 +16,9 @@ dist/
 
 *.local
 
-rmdirs.sh
+*.ropeproject/
+
+rmdirs.s
 
 files.txt
 
