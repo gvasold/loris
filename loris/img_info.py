@@ -341,14 +341,16 @@ class InfoCache(object):
     """
     __slots__ = ( 'http_root', 'https_root', 'size', '_dict', '_lock')
 
-    def __init__(self, root, size=500):
+#    def __init__(self, root, size=500):
+    def __init__(self, config, size=500):
         """
         Args:
-            root (str):
-                Path directory on the file system to be used for the cache.
+            config (dict):
+                The img_info.InfoCache configuration dict.
             size (int):
                 Max entries before the we start popping (LRU).
         """
+        root = config['cache_dp']
         self.http_root = os.path.join(root, 'http')
         self.https_root = os.path.join(root, 'https')
         self.size = size

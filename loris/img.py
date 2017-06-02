@@ -217,8 +217,8 @@ class ImageRequest(object):
 class ImageCache(dict):
     '''
     '''
-    def __init__(self, cache_root):
-        self.cache_root = cache_root
+    def __init__(self, config):
+        self.cache_root = config['cache_dp']
 
     def __contains__(self, image_request):
         return path.exists(self.get_request_cache_path(image_request))

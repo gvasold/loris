@@ -302,9 +302,10 @@ class Loris(object):
         self.max_size_above_full = _loris_config.get('max_size_above_full', 200)
 
         if self.enable_caching:
-            self.info_cache = InfoCache(self.app_configs['img_info.InfoCache']['cache_dp'])
-            cache_dp = self.app_configs['img.ImageCache']['cache_dp']
-            self.img_cache = img.ImageCache(cache_dp)
+            # self.info_cache = InfoCache(self.app_configs['img_info.InfoCache']['cache_dp'])
+            self.info_cache = self._load_infocache()
+            # cache_dp = self.app_configs['img.ImageCache']['cache_dp']
+            self.img_cache = self._load_imgcache()
 
     def _load_transformers(self):
         tforms = self.app_configs['transforms']
@@ -331,6 +332,19 @@ class Loris(object):
         ResolverClass = self._import_class(impl)
         resolver_config =  self.app_configs['resolver']
         return ResolverClass(resolver_config)
+
+
+    def _load_infocache(self):
+        impl = self.app_configs['img_info.InfoCache'].get('impl', 'loris.img_info.InfoCache')
+        CacheClass = self._import_class(impl)
+        cache_config =  self.app_configs['img_info.InfoCache']
+        return CacheClass(cache_config)
+        
+    def _load_imgcache(self):
+        impl = self.app_configs['img.ImageCache'].get('impl', 'loris.img.ImageCache')
+        CacheClass = self._import_class(impl)
+        cache_config =  self.app_configs['img.ImageCache']
+        return CacheClass(cache_config)
 
     def _import_class(self, qname):
         '''Imports a class AND returns it (the class, not an instance).
