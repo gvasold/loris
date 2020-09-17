@@ -325,6 +325,9 @@ class Test_PILTransformer(loris_t.LorisTest,
     def test_convert_to_bitonal_png_from_png(self):
         request_path = 'test.png/full/full/0/bitonal.png'
         image = self.request_image_from_client(request_path)
+        # I'd expect mode '1' here, but 
+        # test_convert_to_bitonal_with_rotation_is_mode_LA
+        # expects 'LA' for a bitonal?
         assert image.mode == '1'
 
     def test_convert_to_gray_png_from_png(self):
@@ -341,7 +344,6 @@ class Test_PILTransformer(loris_t.LorisTest,
         request_path = 'test.tif/full/full/0/gray.png'
         image = self.request_image_from_client(request_path)
         assert image.mode == 'L'
-
 
     def test_convert_to_gray_with_rotation_is_mode_LA(self):
         request_path = '/%s/full/full/45/gray.png' % self.ident
