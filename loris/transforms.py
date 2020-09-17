@@ -168,6 +168,10 @@ class _AbstractTransformer(object):
                 # not 1-bit w. JPG
                 dither = Image.FLOYDSTEINBERG if self.dither_bitonal_images else Image.NONE
                 im = im.convert('1', dither=dither)
+        elif image_request.quality == 'gray':
+            im = im.convert('L')
+        elif image_request.quality == 'bitonal':
+            im = im.convert('1')
 
         if image_request.format == 'jpg':
             # see http://pillow.readthedocs.org/en/latest/handbook/image-file-formats.html#jpeg

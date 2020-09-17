@@ -322,6 +322,27 @@ class Test_PILTransformer(loris_t.LorisTest,
         image = self.request_image_from_client(request_path)
         assert image.mode == 'LA'
 
+    def test_convert_to_bitonal_png_from_png(self):
+        request_path = 'test.png/full/full/0/bitonal.png'
+        image = self.request_image_from_client(request_path)
+        assert image.mode == '1'
+
+    def test_convert_to_gray_png_from_png(self):
+        request_path = 'test.png/full/full/0/gray.png'
+        image = self.request_image_from_client(request_path)
+        assert image.mode == 'L'
+
+    def test_convert_to_bitonal_png_from_tiff(self):
+        request_path = 'test.tif/full/full/0/bitonal.png'
+        image = self.request_image_from_client(request_path)
+        assert image.mode == '1'
+
+    def test_convert_to_gray_png_from_tiff(self):
+        request_path = 'test.tif/full/full/0/gray.png'
+        image = self.request_image_from_client(request_path)
+        assert image.mode == 'L'
+
+
     def test_convert_to_gray_with_rotation_is_mode_LA(self):
         request_path = '/%s/full/full/45/gray.png' % self.ident
         image = self.request_image_from_client(request_path)
